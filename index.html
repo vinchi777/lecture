@@ -36,316 +36,279 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section>
-					<h1>Reveal.js</h1>
-					<h3>HTML Presentations Made Easy</h3>
-					<p>
-						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
-					</p>
-				</section>
+			 <section>
+                                        <h3> Test Case Conventions </h3>
+                                        <h5>Like most things in CakePHP, test cases have some conventions. Concerning tests:</h5>
+                                        <ul>
+                                       <li> PHP files containing tests should be in your app/Test/Case/[Type] directories.</li>
+                                        <li>The filenames of these files should end in Test.php instead of just .php.</li>
+                                        <li>The classes containing tests should extend CakeTestCase, ControllerTestCase or PHPUnit_Framework_TestCase.</li>
+                                        <li>Like other class names, the test case class names should match the filename. RouterTest.php should contain class RouterTest extends CakeTestCase.</li>
+                                        <li>The name of any method containing a test (i.e. containing an assertion) should begin with test, as in testPublished(). You can also use the @test annotation to mark methods as test methods.</li>
+                                        </ul>
+                                </section>
 
-				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
+                                <section>
+                                        <h5>Creating Your First Test Case</h5>
+                                        <pre> <code>
 
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
-				</section>
+                                        class ProgressHelper extends AppHelper {
+                                                public function bar($value) {
+                                                        $width = round($value / 100, 2) * 100;
+                                                        return sprintf(
+                                                                        '<div class="progress-container">
+                                                                        <div class="progress-bar" style="width: %s%%"></div>
+                                                                        </div>', $width);
+                                                }
+                                        }
+                                        </code></pre>
 
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#" class="navigate-down">down</a>.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>Cornify</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
+                                        <pre> <code>
+                                        App::uses('Controller', 'Controller');
+                                        App::uses('View', 'View');
+                                        App::uses('ProgressHelper', 'View/Helper');
 
-				<section>
-					<h2>Slides</h2>
-					<p>
-						Not a coder? No problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slid.es" target="_blank">http://slid.es</a>.
-					</p>
-				</section>
+                                        class ProgressHelperTest extends CakeTestCase {
+                                                public function setUp() {
 
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
-				</section>
+                                                }
 
-				<section>
-					<h2>Works in Mobile Safari</h2>
-					<p>
-						Try it out! You can swipe through the slides and pinch your way to the overview.
-					</p>
-				</section>
+                                                public function testBar() {
 
-				<section>
-					<h2>Marvelous Unordered List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
+                                                }
+                                        }
+                                        </code></pre>
 
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
+                                        <pre> <code>
+                                        public function setUp() {
+                                                parent::setUp();
+                                                $Controller = new Controller();
+                                                $View = new View($Controller);
+                                                $this->Progress = new ProgressHelper($View);
+                                        }
+                                        </code></pre>
+                                </section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
+                                <!-- Example of nested vertical slides -->
+                                <section>
+                                        <h3>Running Tests</h3>
+                                        <h5>Running Test in a browser</h5>
+                                        <p>http://localhost/your_app/test.php.</p>
+                                        <h5>Running Test in command line</h5>
+                                        <pre><code>
+					# Run a model tests in the app
+					./Console/cake test app Model/Article
 
-						For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
+					# Run a component test in a plugin
+					./Console/cake test DebugKit Controller/Component/ToolbarComponent
 
-						```
-						<section data-markdown>
-						  ## Markdown support
-
-						  For those of you who like that sort of thing.
-						  Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-						</section>
-						```
-					</script>
-				</section>
-
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=cube#/transitions">Cube</a> -
-						<a href="?transition=page#/transitions">Page</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a> -
-						<a href="?transition=linear#/transitions">Linear</a> -
-						<a href="?transition=fade#/transitions">Fade</a> -
-						<a href="?transition=none#/transitions">None</a> -
-						<a href="?#/transitions">Default</a>
-					</p>
-				</section>
-
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						Reveal.js comes with a few themes built in: <br>
-						<a href="?#/themes">Default</a> -
-						<a href="?theme=sky#/themes">Sky</a> -
-						<a href="?theme=beige#/themes">Beige</a> -
-						<a href="?theme=simple#/themes">Simple</a> -
-						<a href="?theme=serif#/themes">Serif</a> -
-						<a href="?theme=night#/themes">Night</a> <br>
-						<a href="?theme=moon#/themes">Moon</a> -
-						<a href="?theme=solarized#/themes">Solarized</a>
-					</p>
-					<p>
-						<small>
-							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-						</small>
-					</p>
-				</section>
-
-				<section>
-					<h2>Global State</h2>
-					<p>
-						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-						will be added as a class to the document element when the slide is open. This lets you
-						apply broader style changes, like switching the background.
-					</p>
-				</section>
-
-				<section data-state="customevent">
-					<h2>Custom Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
+					# Run the configure class test in CakePHP
+					./Console/cake test core Core/Configure
 					</code></pre>
 				</section>
-
 				<section>
-					<section data-background="#007777">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#007777"</code> on a slide to change the full page background to the given color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code>&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Repeated Image Backgrounds</h2>
-						<pre><code style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
+					<h3>Test Case Lifecycle Callbacks</h3>
+<p>
+Test cases have a number of lifecycle callbacks you can use when doing testing:
+
+	<li>setUp is called before every test method. Should be used to create the objects that are going to be tested, and initialize any data for the test. Always remember to call parent::setUp()</li>
+	<li>tearDown is called after every test method. Should be used to cleanup after the test is complete. Always remember to call parent::tearDown().</li>
+	<li>setupBeforeClass is called once before test methods in a case are started. This method must be static.</li>
+	<li>tearDownAfterClass is called once after test methods in a case are started. This method must be static.</li>
+</p>
 				</section>
 
-				<section data-transition="linear" data-background="#4d7e65" data-background-transition="slide">
-					<h2>Background Transitions</h2>
-					<p>
-						Pass reveal.js the <code>backgroundTransition: 'slide'</code> config argument to make backgrounds slide rather than fade.
-					</p>
-				</section>
+<section>
+<h3>Fixtures</h3>
+<h3>Creating fixtures</h3>
+<pre><code>
+class ArticleFixture extends CakeTestFixture {
 
-				<section data-transition="linear" data-background="#8c4738" data-background-transition="slide">
-					<h2>Background Transition Override</h2>
-					<p>
-						You can override background transitions per slide by using <code>data-background-transition="slide"</code>.
-					</p>
-				</section>
+      // Optional.
+      // Set this property to load fixtures to a different test datasource
+      public $useDbConfig = 'test';
+      public $fields = array(
+          'id' => array('type' => 'integer', 'key' => 'primary'),
+          'title' => array(
+            'type' => 'string',
+            'length' => 255,
+            'null' => false
+          ),
+          'body' => 'text',
+          'published' => array(
+            'type' => 'integer',
+            'default' => '0',
+            'null' => false
+          ),
+          'created' => 'datetime',
+          'updated' => 'datetime'
+      );
+      public $records = array(
+          array(
+            'id' => 1,
+            'title' => 'First Article',
+            'body' => 'First Article Body',
+            'published' => '1',
+            'created' => '2007-03-18 10:39:23',
+            'updated' => '2007-03-18 10:41:31'
+          ),
+          array(
+            'id' => 2,
+            'title' => 'Second Article',
+            'body' => 'Second Article Body',
+            'published' => '1',
+            'created' => '2007-03-18 10:41:23',
+            'updated' => '2007-03-18 10:43:31'
+          ),
+          array(
+            'id' => 3,
+            'title' => 'Third Article',
+            'body' => 'Third Article Body',
+            'published' => '1',
+            'created' => '2007-03-18 10:43:23',
+            'updated' => '2007-03-18 10:45:31'
+          )
+      );
+ }
+</code></pre>
+</section>
+                                                                                                                                                                                                                                                        <section>
+<h3>Testing Models</h3>
+<pre><code>
+App::uses('Article', 'Model');
 
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
-					</blockquote>
-				</section>
+class ArticleTest extends CakeTestCase {
+    public $fixtures = array('app.article');
 
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
+    public function setUp() {
+        parent::setUp();
+        $this->Article = ClassRegistry::init('Article');
     }
-  }
+
+    public function testPublished() {
+        $result = $this->Article->published(array('id', 'title'));
+        $expected = array(
+            array('Article' => array('id' => 1, 'title' => 'First Article')),
+            array('Article' => array('id' => 2, 'title' => 'Second Article')),
+            array('Article' => array('id' => 3, 'title' => 'Third Article'))
+        );
+
+        $this->assertEquals($expected, $result);
+    }
 }
-					</code></pre>
-					<p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
+</code></pre>
+</section>
 
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
+<section>
+	<h3>Mocking Models</h3>
+	<pre><code>
+public function testSendingEmails() {
+    $model = $this->getMockForModel('EmailVerification', array('send'));
+    $model->expects($this->once())
+        ->method('send')
+        ->will($this->returnValue(true));
 
-				<section>
-					<section id="fragments">
-						<h2>Fragmented Views</h2>
-						<p>Hit the next arrow...</p>
-						<p class="fragment">... to step through ...</p>
-						<ol>
-							<li class="fragment"><code>any type</code></li>
-							<li class="fragment"><em>of view</em></li>
-							<li class="fragment"><strong>fragments</strong></li>
-						</ol>
+    $model->verifyEmail('test@example.com');
+}
+	</code></pre>
+</section>
+                                                                                                                                                                                                                                                        <section>
+<h3>Testing Controllers</h3>
+<pre><code>
+ class ArticlesControllerTest extends ControllerTestCase {
+    public $fixtures = array('app.article');
 
-						<aside class="notes">
-							This slide has fragments which are also stepped through in the notes window.
-						</aside>
-					</section>
-					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's a few styles of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment roll-in">roll-in</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-green">highlight-green</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
-						<p class="fragment current-visible">current-visible</p>
-						<p class="fragment highlight-current-blue">highlight-current-blue</p>
-					</section>
-				</section>
+    public function testIndex() {
+        $result = $this->testAction('/articles/index');
+        debug($result);
+    }
 
-				<section>
-					<h2>Spectacular image!</h2>
-					<a class="image" href="http://lab.hakim.se/meny/" target="_blank">
-						<img width="320" height="299" src="http://s3.amazonaws.com/hakim-static/portfolio/images/meny.png" alt="Meny">
-					</a>
-				</section>
+    public function testIndexShort() {
+        $result = $this->testAction('/articles/index/short');
+        debug($result);
+    }
 
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, below is an example that's been uploaded to SlideShare.</p>
-					<iframe id="slideshare" src="http://www.slideshare.net/slideshow/embed_code/13872948" width="455" height="356" style="margin:0;overflow:hidden;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
-					<script>
-						document.getElementById('slideshare').attributeName = 'allowfullscreen';
-					</script>
-				</section>
+    public function testIndexShortGetRenderedHtml() {
+        $result = $this->testAction(
+           '/articles/index/short',
+            array('return' => 'contents')
+        );
+        debug($result);
+    }
 
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press b or period on your keyboard to enter the 'paused' mode. This mode is helpful when you want to take distracting slides off the screen
-						during a presentation.
-					</p>
-				</section>
+    public function testIndexShortGetViewVars() {
+        $result = $this->testAction(
+            '/articles/index/short',
+            array('return' => 'vars')
+        );
+        debug($result);
+    }
 
-				<section>
-					<h2>Stellar Links</h2>
-					<ul>
-						<li><a href="http://slid.es">Try the online editor</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
-						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
-					</ul>
-				</section>
+    public function testIndexPostData() {
+        $data = array(
+            'Article' => array(
+                'user_id' => 1,
+                'published' => 1,
+                'slug' => 'new-article',
+                'title' => 'New Article',
+                'body' => 'New Body'
+            )
+        );
+        $result = $this->testAction(
+            '/articles/index',
+            array('data' => $data, 'method' => 'post')
+        );
+        debug($result);
+    }
+}
+</code></pre>
+</section> 
 
-				<section>
-					<h1>THE END</h1>
-					<h3>BY Hakim El Hattab / hakim.se</h3>
-				</section>
+<section>
+<h3>You can choose from a number of ways to inspect the success of your controller action. Each offers a different way to ensure your code is doing what you expect:</h3>
+
+<li><strong>vars</strong> Get the set view variables.</li>
+<li><strong>views</strong> Get the rendered view, without a layout.</li>
+<li><strong>contents</strong> Get the rendered view including the layout.</li>
+<li><strong>result</strong> Get the return value of the controller action. Useful for testing requestAction methods.</li>
+</section>   
+
+<section>
+<h3>Using mocks in test action</h3>
+<pre><code>
+public function testAdd() {
+    $Posts = $this->generate('Posts', array(
+        'components' => array(
+            'Session',
+            'Email' => array('send')
+        )
+    ));
+    $Posts->Session
+        ->expects($this->once())
+        ->method('setFlash');
+    $Posts->Email
+        ->expects($this->once())
+        ->method('send')
+        ->will($this->returnValue(true));
+
+    $this->testAction('/posts/add', array(
+        'data' => array(
+            'Post' => array('title' => 'New Post')
+        )
+    ));
+    $this->assertContains('/posts', $this->headers['Location']);
+}
+
+public function testAddGet() {
+    $this->testAction('/posts/add', array(
+        'method' => 'GET',
+        'return' => 'contents'
+    ));
+    $this->assertRegExp('/<html/', $this->contents);
+    $this->assertRegExp('/<form/', $this->view);
+}
+</code></pre>
+</section>	
 
 			</div>
 
@@ -373,15 +336,14 @@ function linkify( selector ) {
 
 				// Optional libraries used to extend on reveal.js
 				multiplex: {
-					secret: "13905545438799213002", // Obtained from the socket.io server. Gives this (the master) control of the presentation
-					id: "b14b4491153d6325", // Obtained from socket.io server
-					url: '127.0.0.1:1948' // Location of socket.io server
+					secret: null, // Obtained from the socket.io server. Gives this (the master) control of the presentation
+					id: "0f8d5edbf0e1a695", // Obtained from socket.io server
+					url: 'http://133.242.147.46:1948' // Location of socket.io server
 				},	
 
 				dependencies: [
 					{ src: '//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.10/socket.io.min.js', async: true },
-					{ src: 'plugin/multiplex/master.js', async: true },
-					{ src: 'plugin/notes-server/client.js', async: true },
+					{ src: 'plugin/multiplex/client.js', async: true },
 					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
 					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
