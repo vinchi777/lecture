@@ -48,46 +48,51 @@
                                         </ul>
                                 </section>
 
-                                <section>
-                                        <h5>Creating Your First Test Case</h5>
-                                        <pre> <code>
+								<section>
+									<h5>Creating Your First Test Case</h5>
+									<pre> <code>
 
-                                        class ProgressHelper extends AppHelper {
-                                                public function bar($value) {
-                                                        $width = round($value / 100, 2) * 100;
-                                                        return sprintf(
-                                                                        '<div class="progress-container">
-                                                                        <div class="progress-bar" style="width: %s%%"></div>
-                                                                        </div>', $width);
-                                                }
-                                        }
-                                        </code></pre>
+										class ProgressHelper extends AppHelper {
+												public function bar($value) {
+														$width = round($value / 100, 2) * 100;
+														return sprintf(
+																		'<div class="progress-container">
+																		<div class="progress-bar" style="width: %s%%"></div>
+																		</div>', $width);
+												}
+										}
+										</code></pre>
+									</section >
 
-                                        <pre> <code>
-                                        App::uses('Controller', 'Controller');
-                                        App::uses('View', 'View');
-                                        App::uses('ProgressHelper', 'View/Helper');
+									<section>
+										<pre> <code>
+										App::uses('Controller', 'Controller');
+										App::uses('View', 'View');
+										App::uses('ProgressHelper', 'View/Helper');
 
-                                        class ProgressHelperTest extends CakeTestCase {
-                                                public function setUp() {
+										class ProgressHelperTest extends CakeTestCase {
+												public function setUp() {
 
-                                                }
+												}
 
-                                                public function testBar() {
+												public function testBar() {
 
-                                                }
-                                        }
-                                        </code></pre>
+												}
+										}
+										</code></pre>
+									</section>
 
-                                        <pre> <code>
-                                        public function setUp() {
-                                                parent::setUp();
-                                                $Controller = new Controller();
-                                                $View = new View($Controller);
-                                                $this->Progress = new ProgressHelper($View);
-                                        }
-                                        </code></pre>
-                                </section>
+									<section>
+
+										<pre> <code>
+										public function setUp() {
+												parent::setUp();
+												$Controller = new Controller();
+												$View = new View($Controller);
+												$this->Progress = new ProgressHelper($View);
+										}
+										</code></pre>
+									</section>
 
                                 <!-- Example of nested vertical slides -->
                                 <section>
@@ -111,10 +116,10 @@
 <p>
 Test cases have a number of lifecycle callbacks you can use when doing testing:
 
-	<li>setUp is called before every test method. Should be used to create the objects that are going to be tested, and initialize any data for the test. Always remember to call parent::setUp()</li>
-	<li>tearDown is called after every test method. Should be used to cleanup after the test is complete. Always remember to call parent::tearDown().</li>
-	<li>setupBeforeClass is called once before test methods in a case are started. This method must be static.</li>
-	<li>tearDownAfterClass is called once after test methods in a case are started. This method must be static.</li>
+<li><strong>setUp</strong> is called before every test method. Should be used to create the objects that are going to be tested, and initialize any data for the test. Always remember to call parent::setUp()</li>
+<li><strong>tearDown</strong> is called after every test method. Should be used to cleanup after the test is complete. Always remember to call parent::tearDown().</li>
+<li><strong>setupBeforeClass</strong> is called once before test methods in a case are started. This method must be static.</li>
+<li><strong>tearDownAfterClass</strong> is called once after test methods in a case are started. This method must be static.</li>
 </p>
 				</section>
 
